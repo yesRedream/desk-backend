@@ -1,16 +1,23 @@
 package com.apo.model;
 
 
-import com.apo.ByteArraySerializer;
+import com.apo.util.ByteArraySerializer;
 import com.apo.error.InvalidCoordinatesException;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Calendar;
 
 /**
  * Created by Andrii Pohrebniak andrii.pohrebniak@gmail.com on 05/06/2017.
  */
+@Document(collection = "desk")
 public class Desk {
+
+    @Id
+    private String id;
+
     public static final int DESK_SIZE = 100;
     //offset = x + y * 100;
     private byte[] field = new byte[DESK_SIZE * DESK_SIZE];
@@ -51,5 +58,13 @@ public class Desk {
 
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

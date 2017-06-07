@@ -1,4 +1,4 @@
-package com.apo;
+package com.apo.util;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;

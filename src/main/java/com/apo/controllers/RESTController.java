@@ -1,5 +1,6 @@
 package com.apo.controllers;
 
+import com.apo.db.MongoService;
 import com.apo.response.JsonPointResponse;
 import com.apo.response.JsonPointResponseBuilder;
 import com.apo.response.Status;
@@ -12,13 +13,16 @@ import org.springframework.web.bind.annotation.*;
 /**
  * Created by Andrii Pohrebniak andrii.pohrebniak@gmail.com on 05/06/2017.
  */
-@RestController(value = "/api")
+@RestController()
+@RequestMapping("/api")
 public class RESTController {
 
     @Autowired
     private Desk desk;
     @Autowired
     private WebSocketSessionManager socketSessionManager;
+    @Autowired
+    private MongoService service;
 
     @GetMapping("/")
     public String hello() {
@@ -40,6 +44,7 @@ public class RESTController {
                 .setX(x)
                 .setY(y).build();
         socketSessionManager.sendToAll(response);
+        service.updateDesk(desk);
         return response;
 
     }

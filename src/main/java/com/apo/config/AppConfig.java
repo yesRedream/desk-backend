@@ -1,6 +1,8 @@
 package com.apo.config;
 
+import com.apo.db.MongoService;
 import com.apo.model.Desk;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -9,9 +11,11 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class AppConfig {
+    @Autowired
+    private MongoService mongoService;
 
     @Bean
     public Desk getDesk() {
-        return new Desk();
+        return mongoService.findDesk();
     }
 }
