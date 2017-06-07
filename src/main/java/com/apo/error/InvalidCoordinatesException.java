@@ -6,6 +6,6 @@ package com.apo.error;
  */
 public class InvalidCoordinatesException extends RuntimeException {
     public InvalidCoordinatesException() {
-        super("X and Y must be in range [0; DESK_SIZE]");
+        super("X and Y must be in range [0; DESK_SIZE)");
     }
 }

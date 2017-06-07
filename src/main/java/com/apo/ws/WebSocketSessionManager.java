@@ -1,5 +1,7 @@
 package com.apo.ws;
 
+import com.apo.response.JsonPointResponse;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
@@ -21,11 +23,11 @@ public class WebSocketSessionManager {
         return  socketSessions.remove(session);
     }
 
-    public void sendToAll(String string) {
+    public void sendToAll(JsonPointResponse response) {
         socketSessions.forEach(session -> {
             if (session.isOpen()) {
                 try {
-                    session.sendMessage(new TextMessage(string));
+                    session.sendMessage(new TextMessage(new ObjectMapper().writeValueAsString(response)));
                     System.out.println("Send to session " + session.getId());
                 } catch (IOException e) {
                     e.printStackTrace();

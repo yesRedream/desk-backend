@@ -1,7 +1,9 @@
 package com.apo.model;
 
 
+import com.apo.ByteArraySerializer;
 import com.apo.error.InvalidCoordinatesException;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.Calendar;
 
@@ -11,10 +13,10 @@ import java.util.Calendar;
 public class Desk {
     public static final int DESK_SIZE = 100;
     //offset = x + y * 100;
-    private short[] field = new short[DESK_SIZE * DESK_SIZE];
+    private byte[] field = new byte[DESK_SIZE * DESK_SIZE];
     private long timestamp = Calendar.getInstance().getTimeInMillis();
 
-    public synchronized void setPoint(int x, int y, short color) {
+    public synchronized void setPoint(int x, int y, byte color) {
         if (x < 0 || x >= 100 || y < 0 || y >= 100) {
             throw new InvalidCoordinatesException();
         }
@@ -29,11 +31,12 @@ public class Desk {
         return field[x + 100 * y];
     }
 
-    public short[] getField() {
+    @JsonSerialize(using = ByteArraySerializer.class)
+    public byte[] getField() {
         return field;
     }
 
-    public void setField(short[] field) {
+    public void setField(byte[] field) {
         this.field = field;
         updateTimestamp();
     }

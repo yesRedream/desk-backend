@@ -1,5 +1,8 @@
 package com.apo.error;
 
+import com.apo.response.JsonPointResponse;
+import com.apo.response.JsonPointResponseBuilder;
+import com.apo.response.Status;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -10,7 +13,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ErrorHandler {
 
     @ExceptionHandler(InvalidCoordinatesException.class)
-    public String onInvalidCoordinatesException() {
-        return "heeeeq";
+    public JsonPointResponse onInvalidCoordinatesException(Throwable throwable) {
+        JsonPointResponse response = new JsonPointResponseBuilder()
+                .setStatus(Status.ERROR)
+                .setMsg(throwable.getMessage()).build();
+        return response;
     }
 }
