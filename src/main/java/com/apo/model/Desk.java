@@ -1,6 +1,8 @@
 package com.apo.model;
 
 
+import com.apo.error.InvalidCoordinatesException;
+
 import java.util.Calendar;
 
 /**
@@ -14,7 +16,7 @@ public class Desk {
 
     public synchronized void setPoint(int x, int y, short color) {
         if (x < 0 || x >= 100 || y < 0 || y >= 100) {
-            throw new IllegalArgumentException("X and Y must be in range [0;" + (DESK_SIZE - 1) + "]");
+            throw new InvalidCoordinatesException();
         }
         field[x + 100 * y] = color;
         updateTimestamp();
@@ -22,7 +24,7 @@ public class Desk {
 
     public synchronized short getPoint(int x, int y) {
         if (x < 0 || x >= 100 || y < 0 || y >= 100) {
-            throw new IllegalArgumentException("X and Y must be in range [0;" + (DESK_SIZE - 1) + "]");
+            throw new InvalidCoordinatesException();
         }
         return field[x + 100 * y];
     }

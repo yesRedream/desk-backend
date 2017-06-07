@@ -31,4 +31,10 @@ public class RESTController {
                            @RequestParam("y") Integer y, @RequestParam("color") Short color) {
         desk.setPoint(x, y, color);
     }
+
+    @GetMapping("/get")
+    public void getPoint(@RequestParam("x") Integer x,
+                         @RequestParam("y") Integer y, @RequestParam("color") Short color) {
+        desk.setPoint(x, y, color);
+    }
 }
