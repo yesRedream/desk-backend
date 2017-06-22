@@ -8,6 +8,7 @@ import com.apo.response.PointResponse;
 import com.apo.ws.WebSocketSessionManager;
 import com.apo.model.Desk;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -25,11 +26,13 @@ public class ApiController {
     private MongoService service;
 
     @GetMapping("/desk")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     public Desk getDesk() {
         return desk;
     }
 
     @GetMapping("/draw") //TODO: change to POST
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     public Response setPoint(@RequestParam(value = "x", required = false) Integer x,
                                   @RequestParam(value = "y", required = false) Integer y,
                                   @RequestParam(value = "color", required = false) Byte color) {
@@ -47,6 +50,7 @@ public class ApiController {
     }
 
     @GetMapping("/get")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     public Response getPoint(@RequestParam("x") Integer x, @RequestParam("y") Integer y) {
         Byte color = desk.getPoint(x, y);
         Response response = new PointResponse.Builder()

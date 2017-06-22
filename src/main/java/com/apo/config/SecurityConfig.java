@@ -10,20 +10,25 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 /**
  * Created by Andrii Pohrebniak andrii.pohrebniak@gmail.com on 14/06/2017.
  */
-@EnableWebSecurity
+@Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/**")
-                .permitAll();
+                .antMatchers("/").permitAll()
+                .antMatchers("/**").authenticated()
+                .and()
+                .formLogin().permitAll()
+                .and()
+                .logout().clearAuthentication(true).logoutSuccessUrl("/").permitAll()
+                .and()
+                .csrf().disable();
     }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .inMemoryAuthentication()
+        auth.inMemoryAuthentication()
                 .withUser("user").password("password").roles("USER");
     }
 }

@@ -21,4 +21,9 @@ public class ViewController {
     public String about() {
         return "about";
     }
+
+    @GetMapping("desk")
+    public String desk() {
+        return "desk";
+    }
 }
