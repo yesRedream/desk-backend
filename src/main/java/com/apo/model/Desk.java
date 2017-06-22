@@ -31,7 +31,7 @@ public class Desk {
         updateTimestamp();
     }
 
-    public synchronized short getPoint(int x, int y) {
+    public synchronized Byte getPoint(int x, int y) {
         if (x < 0 || x >= 100 || y < 0 || y >= 100) {
             throw new InvalidCoordinatesException();
         }

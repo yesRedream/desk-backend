@@ -1,13 +1,13 @@
 package com.apo.controllers;
 
 import com.apo.db.MongoService;
-import com.apo.response.JsonPointResponse;
-import com.apo.response.JsonPointResponseBuilder;
-import com.apo.response.Status;
+import com.apo.error.RequestParamNotFoundException;
+import com.apo.response.Response;
+import com.apo.util.ErrorMessages;
+import com.apo.response.PointResponse;
 import com.apo.ws.WebSocketSessionManager;
 import com.apo.model.Desk;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -30,14 +30,16 @@ public class ApiController {
     }
 
     @GetMapping("/draw") //TODO: change to POST
-    public JsonPointResponse setPoint(@RequestParam("x") Integer x,
-                                      @RequestParam("y") Integer y, @RequestParam("color") byte color) {
+    public Response setPoint(@RequestParam(value = "x", required = false) Integer x,
+                                  @RequestParam(value = "y", required = false) Integer y,
+                                  @RequestParam(value = "color", required = false) Byte color) {
+        checkRequestParams(x, y, color);
         desk.setPoint(x, y, color);
-        JsonPointResponse response = new JsonPointResponseBuilder()
-                .setStatus(Status.OK)
+        Response response = new PointResponse.Builder()
                 .setColor(color)
                 .setX(x)
-                .setY(y).build();
+                .setY(y)
+                .build();
         socketSessionManager.sendToAll(response);
         service.updateDesk(desk);
         return response;
@@ -45,13 +47,25 @@ public class ApiController {
     }
 
     @GetMapping("/get")
-    public JsonPointResponse getPoint(@RequestParam("x") Integer x, @RequestParam("y") Integer y) {
-        short color = desk.getPoint(x, y);
-        JsonPointResponse response = new JsonPointResponseBuilder()
-                .setStatus(Status.OK)
+    public Response getPoint(@RequestParam("x") Integer x, @RequestParam("y") Integer y) {
+        Byte color = desk.getPoint(x, y);
+        Response response = new PointResponse.Builder()
                 .setColor(color)
                 .setX(x)
-                .setY(y).build();
+                .setY(y)
+                .build();
         return response;
+    }
+
+    private void checkRequestParams(Integer x, Integer y, Byte color) {
+        if (x == null) {
+            throw new RequestParamNotFoundException(ErrorMessages.X_NOT_FOUND);
+        }
+        if (y == null) {
+            throw new RequestParamNotFoundException(ErrorMessages.Y_NOT_FOUND);
+        }
+        if (color == null) {
+            throw new RequestParamNotFoundException(ErrorMessages.COLOR_NOT_FOUND);
+        }
     }
 }

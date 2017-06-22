@@ -1,6 +1,7 @@
 package com.apo.ws;
 
-import com.apo.response.JsonPointResponse;
+import com.apo.response.PointResponse;
+import com.apo.response.Response;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -23,7 +24,7 @@ public class WebSocketSessionManager {
         return  socketSessions.remove(session);
     }
 
-    public void sendToAll(JsonPointResponse response) {
+    public void sendToAll(Response response) {
         socketSessions.forEach(session -> {
             if (session.isOpen()) {
                 try {
