@@ -17,14 +17,8 @@ public class ViewController {
         return "home";
     }
 
-    @GetMapping("/hello")
-    public String hello(){
-        return "hello";
+    @GetMapping("about")
+    public String about() {
+        return "about";
     }
-
-    @GetMapping("/login")
-    public String login(){
-        return "login";
-    }
-
 }

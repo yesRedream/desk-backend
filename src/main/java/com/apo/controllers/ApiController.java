@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController()
 @RequestMapping("/api")
-public class RESTController {
+public class ApiController {
 
     @Autowired
     private Desk desk;
@@ -23,11 +23,6 @@ public class RESTController {
     private WebSocketSessionManager socketSessionManager;
     @Autowired
     private MongoService service;
-
-    @GetMapping("/")
-    public String hello() {
-        return "hello";
-    }
 
     @GetMapping("/desk")
     public Desk getDesk() {
