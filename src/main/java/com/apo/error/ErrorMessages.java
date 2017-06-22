@@ -1,4 +1,4 @@
-package com.apo.util;
+package com.apo.error;
 
 /**
  * Created by Andrii Pohrebniak andrii.pohrebniak@gmail.com on 22/06/2017.

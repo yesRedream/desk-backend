@@ -1,7 +1,6 @@
 package com.apo.db;
 
 import com.apo.model.Desk;
-import com.apo.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -17,7 +16,8 @@ public class MongoService {
     private MongoTemplate mongoTemplate;
 
     public Desk findDesk() {
-        Desk desk = mongoTemplate.findOne(Query.query(Criteria.where("id").is(Util.DESK_MONGO_ID)), Desk.class);
+        Desk desk = mongoTemplate.findOne(Query.query(Criteria.where("id").is(Constants.DESK_MONGO_ID)),
+                Desk.class, Constants.COLLECTION_DESK);
         if (desk == null) {
             desk = new Desk();
         }
@@ -25,7 +25,7 @@ public class MongoService {
     }
 
     public void updateDesk(Desk desk) {
-        desk.setId(Util.DESK_MONGO_ID);
-        mongoTemplate.save(desk);
+        desk.setId(Constants.DESK_MONGO_ID);
+        mongoTemplate.save(desk, Constants.COLLECTION_DESK);
     }
 }

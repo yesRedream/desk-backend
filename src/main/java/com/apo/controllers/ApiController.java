@@ -3,7 +3,7 @@ package com.apo.controllers;
 import com.apo.db.MongoService;
 import com.apo.error.RequestParamNotFoundException;
 import com.apo.response.Response;
-import com.apo.util.ErrorMessages;
+import com.apo.error.ErrorMessages;
 import com.apo.response.PointResponse;
 import com.apo.ws.WebSocketSessionManager;
 import com.apo.model.Desk;
