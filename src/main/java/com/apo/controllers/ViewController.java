@@ -12,9 +12,19 @@ import org.springframework.web.servlet.View;
 @RequestMapping("/")
 public class ViewController {
 
-    @GetMapping("/hello")
+    @GetMapping("/")
     public String home(){
         return "home";
+    }
+
+    @GetMapping("/hello")
+    public String hello(){
+        return "hello";
+    }
+
+    @GetMapping("/login")
+    public String login(){
+        return "login";
     }
 
 }
