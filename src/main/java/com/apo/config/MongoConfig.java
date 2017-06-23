@@ -1,6 +1,6 @@
 package com.apo.config;
 
-import com.apo.db.Constants;
+import com.apo.util.Constants;
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import org.springframework.context.annotation.Configuration;

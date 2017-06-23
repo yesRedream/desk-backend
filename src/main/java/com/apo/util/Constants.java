@@ -1,4 +1,4 @@
-package com.apo.db;
+package com.apo.util;
 
 /**
  * Created by Andrii Pohrebniak andrii.pohrebniak@gmail.com on 23/06/2017.

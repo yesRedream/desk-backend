@@ -1,7 +1,8 @@
 package com.apo.controllers;
 
-import com.apo.db.MongoService;
 import com.apo.error.RequestParamNotFoundException;
+import com.apo.model.desk.DeskHolder;
+import com.apo.model.desk.DeskService;
 import com.apo.response.Response;
 import com.apo.error.ErrorMessages;
 import com.apo.response.PointResponse;
@@ -19,16 +20,16 @@ import org.springframework.web.bind.annotation.*;
 public class ApiController {
 
     @Autowired
-    private Desk desk;
-    @Autowired
     private WebSocketSessionManager socketSessionManager;
     @Autowired
-    private MongoService service;
+    private DeskService deskService;
+    @Autowired
+    private DeskHolder deskHolder;
 
     @GetMapping("/desk")
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     public Desk getDesk() {
-        return desk;
+        return deskHolder.getDesk();
     }
 
     @GetMapping("/draw") //TODO: change to POST
@@ -37,14 +38,14 @@ public class ApiController {
                                   @RequestParam(value = "y", required = false) Integer y,
                                   @RequestParam(value = "color", required = false) Byte color) {
         checkRequestParams(x, y, color);
-        desk.setPoint(x, y, color);
+        deskHolder.getDesk().setPoint(x, y, color);
         Response response = new PointResponse.Builder()
                 .setColor(color)
                 .setX(x)
                 .setY(y)
                 .build();
         socketSessionManager.sendToAll(response);
-        service.updateDesk(desk);
+        deskService.updateDesk(deskHolder.getDesk());
         return response;
 
     }
@@ -52,7 +53,7 @@ public class ApiController {
     @GetMapping("/get")
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     public Response getPoint(@RequestParam("x") Integer x, @RequestParam("y") Integer y) {
-        Byte color = desk.getPoint(x, y);
+        Byte color = deskHolder.getDesk().getPoint(x, y);
         Response response = new PointResponse.Builder()
                 .setColor(color)
                 .setX(x)

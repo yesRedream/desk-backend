@@ -1,12 +1,13 @@
 package com.apo.config;
 
-import com.apo.db.MongoService;
-import com.apo.model.desk.Desk;
+import com.apo.model.desk.DeskDAO;
+import com.apo.model.desk.DeskDAOMongo;
+import com.apo.model.desk.DeskHolder;
 import com.apo.model.user.UserDAO;
 import com.apo.model.user.UserDAOMongo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -16,16 +17,20 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 @EnableWebMvc
 public class AppConfig extends WebMvcConfigurerAdapter{
-    @Autowired
-    private MongoService mongoService;
-
-    @Bean
-    public Desk getDesk() {
-        return mongoService.findDesk();
-    }
 
     @Bean
     public UserDAO getUserDAO() {
         return new UserDAOMongo();
+    }
+
+    @Bean
+    public DeskDAO getDeskDAO() {
+        return new DeskDAOMongo();
+    }
+
+    @Bean
+    @Scope(value = "singleton")
+    public DeskHolder getDeskHolder() {
+        return new DeskHolder();
     }
 }

@@ -12,14 +12,18 @@ import java.util.Calendar;
 /**
  * Created by Andrii Pohrebniak andrii.pohrebniak@gmail.com on 05/06/2017.
  */
-@Document(collection = "desk")
+@Document(collection = Desk.COLLECTION)
 public class Desk {
+    static final String COLLECTION = "desk";
 
     @Id
     private String id;
 
     public static final int DESK_SIZE = 100;
-    //offset = x + y * 100;
+
+    /**
+     * offset = x + y * 100;
+     */
     private byte[] field = new byte[DESK_SIZE * DESK_SIZE];
     private long timestamp = Calendar.getInstance().getTimeInMillis();
 
