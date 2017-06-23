@@ -3,9 +3,7 @@ package com.apo.config;
 import com.apo.db.MongoService;
 import com.apo.model.desk.Desk;
 import com.apo.model.user.UserDAO;
-import com.apo.model.user.UserDAOImpl;
-import com.apo.model.user.UserRepository;
-import com.apo.model.user.UserRepositoryImpl;
+import com.apo.model.user.UserDAOMongo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,6 +26,6 @@ public class AppConfig extends WebMvcConfigurerAdapter{
 
     @Bean
     public UserDAO getUserDAO() {
-        return new UserDAOImpl();
+        return new UserDAOMongo();
     }
 }

@@ -1,5 +1,8 @@
 package com.apo.controllers;
 
+import com.apo.model.user.User;
+import com.apo.model.user.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,6 +21,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/")
 public class ViewController {
+    @Autowired UserRepository repository;
 
     @GetMapping("/")
     public String home(){
@@ -26,8 +30,6 @@ public class ViewController {
 
     @GetMapping("about")
     public String about() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println(authentication.getName());
         return "about";
     }
 

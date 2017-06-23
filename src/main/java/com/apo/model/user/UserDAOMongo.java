@@ -6,43 +6,49 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * Created by Andrii Pohrebniak andrii.pohrebniak@gmail.com on 23/06/2017.
  */
-public class UserDAOImpl implements UserDAO{
-    private static final String COLLECTION = "users";
+public class UserDAOMongo implements UserDAO{
 
     @Autowired
     private MongoOperations operations;
 
     @Override
     public void save(User user) {
-        operations.save(user, COLLECTION);
+        operations.save(user);
     }
 
     @Override
     public User getByName(String name) {
         User user = null;
-        user = operations.findOne(Query.query(Criteria.where("username").is(name)), User.class, COLLECTION);
+        user = operations.findOne(Query.query(Criteria.where("username").is(name)), User.class);
         return user;
     }
 
     @Override
     public User getByID(long id) {
         User user = null;
-        user = operations.findOne(Query.query(Criteria.where("id").is(id)), User.class, COLLECTION);
+        user = operations.findOne(Query.query(Criteria.where("_id").is(id)), User.class);
         return user;
     }
 
     @Override
     public User getByEmail(String email) {
         User user = null;
-        user = operations.findOne(Query.query(Criteria.where("email").is(email)), User.class, COLLECTION);
+        user = operations.findOne(Query.query(Criteria.where("email").is(email)), User.class);
         return user;
     }
 
     @Override
     public void remove(User user) {
-        operations.remove(user, COLLECTION);
+        operations.remove(user);
+    }
+
+    @Override
+    public List<User> getAll() {
+        return operations.findAll(User.class);
     }
 }

@@ -1,5 +1,7 @@
 package com.apo.model.user;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,7 +12,12 @@ import java.util.List;
 /**
  * Created by Andrii Pohrebniak andrii.pohrebniak@gmail.com on 23/06/2017.
  */
+@Document(collection = User.COLLECTION)
 public class User implements UserDetails{ //TODO: add new information
+    static final String COLLECTION = "users";
+
+    @Id
+    private String userID;
     private String username;
     private String email;
     private String password;
@@ -20,14 +27,20 @@ public class User implements UserDetails{ //TODO: add new information
     private boolean credentialsExpired;
     private boolean enabled;
 
-    public User(String username, String email, String password) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.expired = false;
-        this.locked = false;
-        this.credentialsExpired = false;
-        this.enabled = true;
+    public User() {
+    }
+
+    private User(Builder builder) {
+        this.userID = builder.userID;
+        this.username = builder.username;
+        this.email = builder.email;
+        this.password = builder.password;
+        this.roles = builder.roles;
+        this.expired = builder.expired;
+        this.locked = builder.locked;
+        this.credentialsExpired = builder.credentialsExpired;
+        this.expired = builder.credentialsExpired;
+        this.enabled = builder.enabled;
     }
 
     @Override
@@ -50,10 +63,6 @@ public class User implements UserDetails{ //TODO: add new information
         return enabled;
     }
 
-    public void addRole(String role) {
-        roles.add(role);
-    }
-
     public List<GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
         for(String role: roles) {
@@ -67,60 +76,89 @@ public class User implements UserDetails{ //TODO: add new information
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    public String getUserID() {
+        return userID;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public List<String> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<String> roles) {
-        this.roles = roles;
-    }
+    public static class Builder {
+        private String userID;
+        private String username;
+        private String email;
+        private String password;
+        private List<String> roles = new ArrayList<>();
+        private boolean expired = false;
+        private boolean locked = false;
+        private boolean credentialsExpired = false;
+        private boolean enabled = true;
 
-    public boolean isExpired() {
-        return expired;
-    }
+        public Builder() {
+        }
 
-    public void setExpired(boolean expired) {
-        this.expired = expired;
-    }
+        public Builder setUserID(String userID) {
+            this.userID = userID;
+            return this;
+        }
 
-    public boolean isLocked() {
-        return locked;
-    }
+        public Builder setUsername(String username) {
+            this.username = username;
+            return this;
+        }
 
-    public void setLocked(boolean locked) {
-        this.locked = locked;
-    }
+        public Builder setEmail(String email) {
+            this.email = email;
+            return this;
+        }
 
-    public boolean isCredentialsExpired() {
-        return credentialsExpired;
-    }
+        public Builder setPassword(String password) {
+            this.password = password;
+            return this;
+        }
 
-    public void setCredentialsExpired(boolean credentialsExpired) {
-        this.credentialsExpired = credentialsExpired;
-    }
+        public Builder setRoles(List<String> roles) {
+            this.roles = roles;
+            return this;
+        }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+        public Builder setExpired(boolean expired) {
+            this.expired = expired;
+            return this;
+        }
+
+        public Builder setLocked(boolean locked) {
+            this.locked = locked;
+            return this;
+        }
+
+        public Builder setCredentialsExpired(boolean credentialsExpired) {
+            this.credentialsExpired = credentialsExpired;
+            return this;
+        }
+
+        public Builder setEnabled(boolean enabled) {
+            this.enabled = enabled;
+            return this;
+        }
+
+        public Builder addRole(String role) {
+            this.roles.add(role);
+            return this;
+        }
+
+        public User build() {
+            return new User(this);
+        }
     }
 }

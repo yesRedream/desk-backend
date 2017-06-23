@@ -1,9 +1,9 @@
 package com.apo.model.user;
 
-import com.apo.db.MongoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * Created by Andrii Pohrebniak andrii.pohrebniak@gmail.com on 23/06/2017.
@@ -15,7 +15,12 @@ public class UserRepositoryImpl implements UserRepository{
     private UserDAO dao;
 
     @Override
-    public void  save(User user) {
+    public void add(User user) {
+        dao.save(user);
+    }
+
+    @Override
+    public void update(User user) {
         dao.save(user);
     }
 
@@ -39,4 +44,8 @@ public class UserRepositoryImpl implements UserRepository{
         dao.remove(user);
     }
 
+    @Override
+    public List<User> getAll() {
+        return dao.getAll();
+    }
 }
