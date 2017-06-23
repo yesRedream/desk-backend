@@ -2,6 +2,8 @@ package com.apo.config;
 
 import com.apo.db.MongoService;
 import com.apo.model.desk.Desk;
+import com.apo.model.user.UserDAO;
+import com.apo.model.user.UserDAOImpl;
 import com.apo.model.user.UserRepository;
 import com.apo.model.user.UserRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +24,10 @@ public class AppConfig extends WebMvcConfigurerAdapter{
     @Bean
     public Desk getDesk() {
         return mongoService.findDesk();
+    }
+
+    @Bean
+    public UserDAO getUserDAO() {
+        return new UserDAOImpl();
     }
 }

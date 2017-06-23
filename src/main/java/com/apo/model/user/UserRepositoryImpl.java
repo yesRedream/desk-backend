@@ -1,5 +1,8 @@
 package com.apo.model.user;
 
+import com.apo.db.MongoService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -8,9 +11,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class UserRepositoryImpl implements UserRepository{
 
+    @Autowired
+    private UserDAO dao;
+
     @Override
-    public boolean save(User user) {
-        return false;
+    public void  save(User user) {
+        dao.save(user);
     }
 
     @Override
@@ -25,14 +31,12 @@ public class UserRepositoryImpl implements UserRepository{
 
     @Override
     public User findByName(String name) {
-        User mockUser = new User("apohrebniak", "apo@gmail.com", "pass");
-        mockUser.addRole("ROLE_USER");
-        return mockUser;
+        return dao.getByName(name);
     }
 
     @Override
-    public boolean remove(User user) {
-        return false;
+    public void remove(User user) {
+        dao.remove(user);
     }
 
 }

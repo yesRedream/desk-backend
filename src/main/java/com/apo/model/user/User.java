@@ -2,6 +2,7 @@ package com.apo.model.user;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,29 +10,65 @@ import java.util.List;
 /**
  * Created by Andrii Pohrebniak andrii.pohrebniak@gmail.com on 23/06/2017.
  */
-public class User { //TODO: add new information
-    private String name;
+public class User implements UserDetails{ //TODO: add new information
+    private String username;
     private String email;
     private String password;
     private List<String> roles = new ArrayList<>();
+    private boolean expired;
+    private boolean locked;
+    private boolean credentialsExpired;
+    private boolean enabled;
 
-    public User(String name, String email, String password) {
-        this.name = name;
+    public User(String username, String email, String password) {
+        this.username = username;
         this.email = email;
         this.password = password;
-        this.roles = roles;
+        this.expired = false;
+        this.locked = false;
+        this.credentialsExpired = false;
+        this.enabled = true;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return !expired;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return !locked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return !credentialsExpired;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
     }
 
     public void addRole(String role) {
         roles.add(role);
     }
 
-    public String getName() {
-        return name;
+    public List<GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        for(String role: roles) {
+            authorities.add(new SimpleGrantedAuthority(role));
+        }
+        return authorities;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
@@ -42,6 +79,7 @@ public class User { //TODO: add new information
         this.email = email;
     }
 
+    @Override
     public String getPassword() {
         return password;
     }
@@ -58,11 +96,31 @@ public class User { //TODO: add new information
         this.roles = roles;
     }
 
-    public List<GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        for(String role: roles) {
-            authorities.add(new SimpleGrantedAuthority(role));
-        }
-        return authorities;
+    public boolean isExpired() {
+        return expired;
+    }
+
+    public void setExpired(boolean expired) {
+        this.expired = expired;
+    }
+
+    public boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
+    }
+
+    public boolean isCredentialsExpired() {
+        return credentialsExpired;
+    }
+
+    public void setCredentialsExpired(boolean credentialsExpired) {
+        this.credentialsExpired = credentialsExpired;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

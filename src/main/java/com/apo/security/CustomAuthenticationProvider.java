@@ -1,6 +1,5 @@
 package com.apo.security;
 
-import com.apo.db.MongoService;
 import com.apo.model.user.User;
 import com.apo.model.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String password = (String)authentication.getCredentials();
         User user = repository.findByName(name);
 
-        if (user == null || !user.getName().equalsIgnoreCase(name)) {
+        if (user == null || !user.getUsername().equalsIgnoreCase(name)) {
             throw new BadCredentialsException("Username not found");
         }
         if (!user.getPassword().equals(password)) {
