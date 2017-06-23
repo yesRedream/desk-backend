@@ -1,4 +1,4 @@
-package com.apo.model;
+package com.apo.model.desk;
 
 
 import com.apo.util.ByteArraySerializer;

@@ -1,6 +1,6 @@
 package com.apo.db;
 
-import com.apo.model.Desk;
+import com.apo.model.desk.Desk;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;

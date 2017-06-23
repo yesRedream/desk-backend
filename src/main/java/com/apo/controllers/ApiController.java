@@ -6,7 +6,7 @@ import com.apo.response.Response;
 import com.apo.error.ErrorMessages;
 import com.apo.response.PointResponse;
 import com.apo.ws.WebSocketSessionManager;
-import com.apo.model.Desk;
+import com.apo.model.desk.Desk;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

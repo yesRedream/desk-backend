@@ -1,5 +1,6 @@
 package com.apo.config;
 
+import com.apo.db.Constants;
 import com.apo.util.Util;
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
@@ -14,13 +15,13 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 public class MongoConfig {
     @Bean
     public Mongo getMongo() {
-        MongoClient client = new MongoClient(Util.MONGO_URL);
+        MongoClient client = new MongoClient(Constants.MONGO_URL);
         return client;
     }
 
     @Bean
     public MongoTemplate getMongoTemplate() {
-        MongoTemplate template = new MongoTemplate(getMongo(), Util.MONGO_DB);
+        MongoTemplate template = new MongoTemplate(getMongo(), Constants.MONGO_DB);
         return template;
     }
 }

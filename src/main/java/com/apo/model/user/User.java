@@ -1,5 +1,9 @@
-package com.apo.security;
+package com.apo.model.user;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,13 +13,17 @@ public class User { //TODO: add new information
     private String name;
     private String email;
     private String password;
-    private List<String> roles;
+    private List<String> roles = new ArrayList<>();
 
-    public User(String name, String email, String password, List<String> roles) {
+    public User(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.roles = roles;
+    }
+
+    public void addRole(String role) {
+        roles.add(role);
     }
 
     public String getName() {
@@ -48,5 +56,13 @@ public class User { //TODO: add new information
 
     public void setRoles(List<String> roles) {
         this.roles = roles;
+    }
+
+    public List<GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        for(String role: roles) {
+            authorities.add(new SimpleGrantedAuthority(role));
+        }
+        return authorities;
     }
 }
