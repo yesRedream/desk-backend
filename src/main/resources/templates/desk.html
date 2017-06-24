@@ -13,17 +13,95 @@
                 "#00E8D8","#787878","#000000","#000000","#FCFCFC","#A4E4FC","#B8B8F8","#D8B8F8","#F8B8F8",
                 "#F8A4C0","#F0D0B0","#FCE0A8","#F8D878","#D8F878","#B8F8B8","#B8F8D8","#00FCFC","#F8D8F8",
                 "#000000","#000000"];
-
         var field = [];
+        var socket;
+        var fieldCanvas;
+        var paletteCanvas;
+        var selectedColorCanvas;
+
+        var selectedColorIndex = 0;
+
 
         function init() {
+            initPalette();
+            drawPalette();
             initWS();
-            getDeskAndDraw()
+            initSelected();
+            drawSelected();
+            initDesk();
+            getDeskAndDrawDesk();
+        }
+
+        function initSelected() {
+            selectedColorCanvas = document.getElementById("canvas_selected");
+
+        }
+
+        function drawSelected() {
+            if (selectedColorCanvas.getContext) {
+                var ctx = selectedColorCanvas.getContext('2d');
+                ctx.fillStyle = getNESColorByIndex(selectedColorIndex);
+                ctx.fillRect(0,0,20,20);
+            }
+        }
+
+        function initDesk() {
+            fieldCanvas = document.getElementById("canvas_field");
+
+            fieldCanvas.addEventListener("mousemove", function (event) {
+               var _x = fieldCanvas.getBoundingClientRect().left;
+               var _y = fieldCanvas.getBoundingClientRect().top;
+               var x = Math.floor((event.clientX - _x) / 10);
+               var y = Math.floor((event.clientY - _y) / 10);
+
+                drawSelectedStrokeOnDesk(x, y);
+            });
+        }
+
+        function initPalette() {
+            paletteCanvas = document.getElementById("canvas_palette");
+
+            paletteCanvas.addEventListener("mousemove", function (event) {
+                x = paletteCanvas.getBoundingClientRect().left;
+                var mouseOnIndex = Math.floor((event.clientX - x) / 20);
+                drawPalette();
+                drawSelectedStrokeOnPalette(mouseOnIndex);
+            });
+
+            paletteCanvas.addEventListener("mouseout", function (event) {
+                drawPalette();
+            });
+
+            paletteCanvas.addEventListener("click", function (event) {
+                var x = paletteCanvas.getBoundingClientRect().left;
+                selectedColorIndex = Math.floor((event.clientX - x) / 20);
+                drawSelected();
+                console.log("click");
+            });
+        }
+
+        function drawSelectedStrokeOnPalette(index) {
+            if (paletteCanvas.getContext) {
+                var ctx = paletteCanvas.getContext('2d');
+                ctx.strokeStyle = "#000000";
+                ctx.strokeRect(index * 20, 0, 20, 20);
+                ctx.strokeStyle = "#FFFFFF";
+                ctx.strokeRect(index * 20 + 1, 1, 18, 18);
+            }
+        }
+
+        function drawSelectedStrokeOnDesk(x, y) {
+            if (fieldCanvas.getContext) {
+                var ctx = fieldCanvas.getContext('2d');
+                ctx.strokeStyle = "#000000";
+                ctx.strokeRect(x * 10, y * 10, 9, 9);
+                ctx.strokeStyle = "#FFFFFF";
+                ctx.strokeRect(x * 10 + 1, y * 10 + 1, 7, 7);
+            }
         }
 
         function initWS() {
-            var socket = new WebSocket("ws://localhost:8080/updates");
-
+            socket = new WebSocket("ws://localhost:8080/updates");
             socket.onopen = function() {
                 console.log("Connection opened")
             };
@@ -42,14 +120,14 @@
         }
 
         function updatePixel(x, y, color) {
-            var canvas = document.getElementById('canvas');
-            if (canvas.getContext) {
-                var ctx = canvas.getContext('2d');
-                drawPixel(ctx, x + 100 * y, getNESColorByIndex(color));
+            fieldCanvas = document.getElementById('canvas_field');
+            if (fieldCanvas.getContext) {
+                var ctx = fieldCanvas.getContext('2d');
+                drawPixelOnDesk(ctx, x + 100 * y, getNESColorByIndex(color));
             }
         }
 
-        function getDeskAndDraw() {
+        function getDeskAndDrawDesk() {
             var xhr = new XMLHttpRequest();
             var url = "http://localhost:8080/api/desk";
             xhr.open("GET",url,false);
@@ -59,22 +137,22 @@
 
             if (responce.field) {
                 field = responce.field;
-                draw();
+                drawDesk();
             }
         }
 
-        function draw() {
-            var canvas = document.getElementById('canvas');
-            if (canvas.getContext) {
-                var ctx = canvas.getContext('2d');
+        function drawDesk() {
+            fieldCanvas = document.getElementById('canvas_field');
+            if (fieldCanvas.getContext) {
+                var ctx = fieldCanvas.getContext('2d');
 
                 field.forEach(function (color, offset, field) {
-                    drawPixel(ctx, offset, getNESColorByIndex(color));
+                    drawPixelOnDesk(ctx, offset, getNESColorByIndex(color));
                 });
             }
         }
 
-        function drawPixel(ctx, offset, color) {
+        function drawPixelOnDesk(ctx, offset, color) {
             console.log("Offset:" + offset + " color: " + color);
 //            offset = x + y * 100;
             var y = Math.floor(offset / 100);
@@ -86,14 +164,41 @@
         function getNESColorByIndex(index) {
             return paletteNES[index];
         }
+
+        function drawPalette() {
+            paletteCanvas = document.getElementById('canvas_palette');
+            if (paletteCanvas.getContext) {
+                var ctx = paletteCanvas.getContext('2d');
+
+                paletteNES.forEach(function (p1, x, p3) {
+                    ctx.fillStyle = p1;
+                    ctx.fillRect(x * 20, 0, 20, 20)
+                });
+            }
+
+        }
+
+        function sendPixelColor() {
+            var xhr = new XMLHttpRequest();
+            var url = "http://localhost:8080/api/draw?x=0&y=0&color=" + selectedColorIndex;
+            xhr.open("GET",url,false);
+            xhr.send();
+            var responce = xhr.responseText;
+            responce = JSON.parse(responce);
+            console.log(responce);
+        }
         //]]>
     </script>
 </head>
-<body>
+<body onload="init();">
     <h1>Desk</h1>
     <a href="/">Home</a>
     <a href="/logout">Logout</a>
-    <canvas id="canvas" width="1000" height="1000"></canvas>
-    <script>init();</script>
+    <canvas id="canvas_palette" width="1280" height="20"></canvas>
+    <button id="btn_draw" name="Draw selected pixel" onclick="sendPixelColor()">Draw</button>
+    <p>Selected color</p>
+
+    <canvas id="canvas_selected" width="20" height="20"></canvas>
+    <canvas id="canvas_field" width="1000" height="1000"></canvas>
 </body>
 </html>
