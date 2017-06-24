@@ -25,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout().clearAuthentication(true).logoutSuccessUrl("/").permitAll()
                 .and()
-                .csrf().disable();
+                .csrf().disable().cors().disable();
     }
 
     @Autowired

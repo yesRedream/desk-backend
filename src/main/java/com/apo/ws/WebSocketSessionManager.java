@@ -28,7 +28,7 @@ public class WebSocketSessionManager {
             if (session.isOpen()) {
                 try {
                     session.sendMessage(new TextMessage(new ObjectMapper().writeValueAsString(response)));
-                    System.out.println("Send to session " + session.getId());
+                    System.out.println("Send to session " + session.getId());//TODO: change to logger
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

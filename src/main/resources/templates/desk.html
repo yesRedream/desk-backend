@@ -1,12 +1,99 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.springframework.org/schema/mvc">
 <head>
     <meta charset="UTF-8"/>
     <title>Desk</title>
+    <script type="text/javascript">
+        //<![CDATA[
+        var paletteNES = ["#7C7C7C","#0000FC","#0000BC","#4428BC","#940084","#A80020","#A81000","#881400",
+                "#503000","#007800","#006800","#005800","#004058","#000000","#000000","#000000","#BCBCBC",
+                "#0078F8","#0058F8","#6844FC","#D800CC","#E40058","#F83800","#E45C10","#AC7C00","#00B800",
+                "#00A800","#00A844","#008888","#000000","#000000","#000000","#F8F8F8","#3CBCFC","#6888FC",
+                "#9878F8","#F878F8","#F85898","#F87858","#FCA044","#F8B800","#B8F818","#58D854","#58F898",
+                "#00E8D8","#787878","#000000","#000000","#FCFCFC","#A4E4FC","#B8B8F8","#D8B8F8","#F8B8F8",
+                "#F8A4C0","#F0D0B0","#FCE0A8","#F8D878","#D8F878","#B8F8B8","#B8F8D8","#00FCFC","#F8D8F8",
+                "#000000","#000000"];
+
+        var field = [];
+
+        function init() {
+            initWS();
+            getDeskAndDraw()
+        }
+
+        function initWS() {
+            var socket = new WebSocket("ws://localhost:8080/updates");
+
+            socket.onopen = function() {
+                console.log("Connection opened")
+            };
+
+            socket.onclose = function(){
+                console.log("Connection closed")
+            };
+
+            socket.onmessage = function(event) {
+                var response = event.data;
+                response = JSON.parse(response);
+                if (response.status == "OK") {
+                    updatePixel(response.x, response.y, response.color);
+                }
+            };
+        }
+
+        function updatePixel(x, y, color) {
+            var canvas = document.getElementById('canvas');
+            if (canvas.getContext) {
+                var ctx = canvas.getContext('2d');
+                drawPixel(ctx, x + 100 * y, getNESColorByIndex(color));
+            }
+        }
+
+        function getDeskAndDraw() {
+            var xhr = new XMLHttpRequest();
+            var url = "http://localhost:8080/api/desk";
+            xhr.open("GET",url,false);
+            xhr.send();
+            var responce = xhr.responseText;
+            responce = JSON.parse(responce);
+
+            if (responce.field) {
+                field = responce.field;
+                draw();
+            }
+        }
+
+        function draw() {
+            var canvas = document.getElementById('canvas');
+            if (canvas.getContext) {
+                var ctx = canvas.getContext('2d');
+
+                field.forEach(function (color, offset, field) {
+                    drawPixel(ctx, offset, getNESColorByIndex(color));
+                });
+            }
+        }
+
+        function drawPixel(ctx, offset, color) {
+            console.log("Offset:" + offset + " color: " + color);
+//            offset = x + y * 100;
+            var y = Math.floor(offset / 100);
+            var x = offset - 100 * y;
+            ctx.fillStyle = color;
+            ctx.fillRect(x * 10, y * 10, 10, 10)
+        }
+
+        function getNESColorByIndex(index) {
+            return paletteNES[index];
+        }
+        //]]>
+    </script>
 </head>
 <body>
     <h1>Desk</h1>
     <a href="/">Home</a>
     <a href="/logout">Logout</a>
+    <canvas id="canvas" width="1000" height="1000"></canvas>
+    <script>init();</script>
 </body>
 </html>
