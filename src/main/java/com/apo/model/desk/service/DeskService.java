@@ -1,6 +1,6 @@
-package com.apo.model.desk;
+package com.apo.model.desk.service;
 
-import org.springframework.stereotype.Service;
+import com.apo.model.desk.Desk;
 
 /**
  * Created by Andrii Pohrebniak andrii.pohrebniak@gmail.com on 24/06/2017.

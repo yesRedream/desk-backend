@@ -2,7 +2,7 @@ package com.apo.controllers;
 
 import com.apo.error.RequestParamNotFoundException;
 import com.apo.model.desk.DeskHolder;
-import com.apo.model.desk.DeskService;
+import com.apo.model.desk.service.DeskService;
 import com.apo.response.Response;
 import com.apo.error.ErrorMessages;
 import com.apo.response.PointResponse;

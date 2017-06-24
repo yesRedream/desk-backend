@@ -1,5 +1,7 @@
-package com.apo.model.user;
+package com.apo.model.user.repository;
 
+import com.apo.model.user.User;
+import com.apo.model.user.dao.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

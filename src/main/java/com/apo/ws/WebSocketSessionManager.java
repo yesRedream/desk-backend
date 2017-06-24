@@ -1,6 +1,5 @@
 package com.apo.ws;
 
-import com.apo.response.PointResponse;
 import com.apo.response.Response;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.socket.TextMessage;

@@ -2,7 +2,6 @@ package com.apo.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import javafx.util.Builder;
 
 /**
  * Created by Andrii Pohrebniak andrii.pohrebniak@gmail.com on 22/06/2017.

@@ -1,10 +1,10 @@
-package com.apo.model.user;
+package com.apo.model.user.dao;
 
+import com.apo.model.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 

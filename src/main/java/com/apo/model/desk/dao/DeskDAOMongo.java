@@ -1,5 +1,6 @@
-package com.apo.model.desk;
+package com.apo.model.desk.dao;
 
+import com.apo.model.desk.Desk;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;

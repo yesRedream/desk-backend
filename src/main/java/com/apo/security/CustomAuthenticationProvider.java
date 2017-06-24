@@ -1,7 +1,7 @@
 package com.apo.security;
 
 import com.apo.model.user.User;
-import com.apo.model.user.UserRepository;
+import com.apo.model.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;

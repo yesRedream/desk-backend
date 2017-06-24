@@ -1,4 +1,6 @@
-package com.apo.model.user;
+package com.apo.model.user.repository;
+
+import com.apo.model.user.User;
 
 import java.util.List;
 

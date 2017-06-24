@@ -1,5 +1,6 @@
 package com.apo.model.desk;
 
+import com.apo.model.desk.service.DeskService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**

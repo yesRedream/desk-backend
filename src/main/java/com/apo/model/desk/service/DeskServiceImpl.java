@@ -1,5 +1,7 @@
-package com.apo.model.desk;
+package com.apo.model.desk.service;
 
+import com.apo.model.desk.Desk;
+import com.apo.model.desk.dao.DeskDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

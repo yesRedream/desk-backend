@@ -1,10 +1,10 @@
 package com.apo.config;
 
-import com.apo.model.desk.DeskDAO;
-import com.apo.model.desk.DeskDAOMongo;
+import com.apo.model.desk.dao.DeskDAO;
+import com.apo.model.desk.dao.DeskDAOMongo;
 import com.apo.model.desk.DeskHolder;
-import com.apo.model.user.UserDAO;
-import com.apo.model.user.UserDAOMongo;
+import com.apo.model.user.dao.UserDAO;
+import com.apo.model.user.dao.UserDAOMongo;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
