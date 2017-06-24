@@ -6,10 +6,13 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import java.util.logging.Logger;
+
 /**
  * Created by Andrii Pohrebniak andrii.pohrebniak@gmail.com on 06/06/2017.
  */
 public class WebSocketUpdatesHandler extends TextWebSocketHandler{
+    private static final Logger LOGGER = Logger.getLogger(WebSocketUpdatesHandler.class.getName());
 
     @Autowired
     private WebSocketSessionManager socketSessionManager;
@@ -22,14 +25,14 @@ public class WebSocketUpdatesHandler extends TextWebSocketHandler{
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         super.afterConnectionEstablished(session);
-        System.out.println("Connection established");
+        LOGGER.info("Connection established");
         socketSessionManager.addSession(session);
     }
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         super.afterConnectionClosed(session, status);
-        System.out.println("Connection closed");
+        LOGGER.info("Connection closed");
         socketSessionManager.removeSession(session);
     }
 

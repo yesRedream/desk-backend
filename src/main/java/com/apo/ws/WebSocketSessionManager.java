@@ -8,11 +8,13 @@ import org.springframework.web.socket.WebSocketSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Created by Andrii Pohrebniak andrii.pohrebniak@gmail.com on 06/06/2017.
  */
 public class WebSocketSessionManager {
+    private static final Logger LOGGER = Logger.getLogger(WebSocketSessionManager.class.getName());
     private List<WebSocketSession> socketSessions = new ArrayList<>();
 
     public boolean addSession(WebSocketSession session) {
@@ -28,7 +30,7 @@ public class WebSocketSessionManager {
             if (session.isOpen()) {
                 try {
                     session.sendMessage(new TextMessage(new ObjectMapper().writeValueAsString(response)));
-                    System.out.println("Send to session " + session.getId());//TODO: change to logger
+                    LOGGER.info("Send to session " + session.getId());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

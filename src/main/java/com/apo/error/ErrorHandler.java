@@ -23,4 +23,11 @@ public class ErrorHandler {
                 .setErrorMessage(throwable.getMessage())
                 .build();
     }
+
+    @ExceptionHandler(InvalidColorValueException.class)
+    public Response onInvalidColorValue(Throwable throwable) {
+        return new ErrorResponse.Builder()
+                .setErrorMessage(throwable.getMessage())
+                .build();
+    }
 }

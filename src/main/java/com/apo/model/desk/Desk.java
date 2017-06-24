@@ -1,8 +1,10 @@
 package com.apo.model.desk;
 
 
+import com.apo.error.InvalidColorValueException;
 import com.apo.util.ByteArraySerializer;
 import com.apo.error.InvalidCoordinatesException;
+import com.apo.util.Constants;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -31,6 +33,10 @@ public class Desk {
         if (x < 0 || x >= 100 || y < 0 || y >= 100) {
             throw new InvalidCoordinatesException();
         }
+        if (color < Constants.MIN_COLOR_VALUE || color > Constants.MAX_COLOR_VALUE) {
+            throw new InvalidColorValueException();
+        }
+
         field[x + 100 * y] = color;
         updateTimestamp();
     }

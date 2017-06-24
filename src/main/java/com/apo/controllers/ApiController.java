@@ -34,9 +34,9 @@ public class ApiController {
 
     @GetMapping("/draw") //TODO: change to POST
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
-    public Response setPoint(@RequestParam(value = "x", required = false) Integer x,
-                                  @RequestParam(value = "y", required = false) Integer y,
-                                  @RequestParam(value = "color", required = false) Byte color) {
+    public Response draw(@RequestParam(value = "x", required = false) Integer x,
+                         @RequestParam(value = "y", required = false) Integer y,
+                         @RequestParam(value = "color", required = false) Byte color) {
         checkRequestParams(x, y, color);
         deskHolder.getDesk().setPoint(x, y, color);
         Response response = new PointResponse.Builder()
