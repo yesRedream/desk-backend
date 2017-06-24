@@ -10,7 +10,7 @@ import java.util.List;
 public interface UserDAO {
     void save(User user);
     User getByName(String name);
-    User getByID(long id);
+    User getByID(String id);
     User getByEmail(String email);
     void remove(User user);
     List<User> getAll();

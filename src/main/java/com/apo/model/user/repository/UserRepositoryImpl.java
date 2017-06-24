@@ -27,13 +27,13 @@ public class UserRepositoryImpl implements UserRepository{
     }
 
     @Override
-    public User findByID(long id) {
-        return null;
+    public User findByID(String id) {
+        return dao.getByID(id);
     }
 
     @Override
     public User findByEmail(String email) {
-        return null;
+        return dao.getByEmail(email);
     }
 
     @Override

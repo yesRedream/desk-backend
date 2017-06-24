@@ -29,7 +29,7 @@ public class UserDAOMongo implements UserDAO{
     }
 
     @Override
-    public User getByID(long id) {
+    public User getByID(String id) {
         User user = null;
         user = operations.findOne(Query.query(Criteria.where("_id").is(id)), User.class);
         return user;

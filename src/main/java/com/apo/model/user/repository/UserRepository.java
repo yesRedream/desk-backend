@@ -10,7 +10,7 @@ import java.util.List;
 public interface UserRepository {
     void add(User user);
     void update(User user);
-    User findByID(long id);
+    User findByID(String id);
     User findByEmail(String email);
     User findByName(String name);
     List<User> getAll();
