@@ -25,7 +25,7 @@ public class WebSocketSessionManager {
         return  socketSessions.remove(session);
     }
 
-    public void sendToAll(Response response) {
+    public void broadcast(Response response) {
         socketSessions.forEach(session -> {
             if (session.isOpen()) {
                 try {

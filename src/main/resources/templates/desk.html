@@ -131,9 +131,15 @@
             socket.onmessage = function(event) {
                 var response = event.data;
                 response = JSON.parse(response);
-                if (response.status == "OK") {
-                    field[response.x + 100 * response.y] = response.color;
-                    updatePixel(response.x, response.y, response.color);
+                if (response.status === "OK") {
+                    if (response.type === "POINT_UPDATE") {
+                        field[response.x + 100 * response.y] = response.color;
+                        updatePixel(response.x, response.y, response.color);
+                    }
+                    if (response.type === "ONLINE_UPDATE") {
+                        var counter = document.getElementById("online_count");
+                        counter.textContent = response.online_count;
+                    }
                 }
             };
         }
@@ -212,6 +218,10 @@
     <h1>Desk</h1>
     <a href="/">Home</a>
     <a href="/logout">Logout</a>
+    <div>
+        <p>Online:</p>
+        <p id="online_count"></p>
+    </div>
     <div>
         <canvas id="canvas_palette" width="1280" height="20" style="image-rendering: pixelated"></canvas>
         <div>

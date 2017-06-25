@@ -1,5 +1,6 @@
 package com.apo.ws;
 
+import com.apo.response.OnlineUpdateResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -27,6 +28,7 @@ public class WebSocketUpdatesHandler extends TextWebSocketHandler{
         super.afterConnectionEstablished(session);
         LOGGER.info("Connection established");
         socketSessionManager.addSession(session);
+        broadcastOnline();
     }
 
     @Override
@@ -34,6 +36,13 @@ public class WebSocketUpdatesHandler extends TextWebSocketHandler{
         super.afterConnectionClosed(session, status);
         LOGGER.info("Connection closed");
         socketSessionManager.removeSession(session);
+        broadcastOnline();
+    }
+
+    private void broadcastOnline() {
+        socketSessionManager.broadcast(new OnlineUpdateResponse.Builder()
+                .setOnlineCount(socketSessionManager.getSessionsCount())
+                .build());
     }
 
 }

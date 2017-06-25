@@ -7,5 +7,6 @@ public enum Type {
     ERROR,
     POINT_INFO,
     DESK,
-    POINT_UPDATE;
+    POINT_UPDATE,
+    ONLINE_UPDATE;
 }

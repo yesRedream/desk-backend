@@ -45,7 +45,7 @@ public class ApiController {
                 .setX(x)
                 .setY(y)
                 .build();
-        socketSessionManager.sendToAll(response);
+        socketSessionManager.broadcast(response);
         deskService.updateDesk(deskHolder.getDesk());
         return response;
 
