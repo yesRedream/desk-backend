@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Created by Andrii Pohrebniak andrii.pohrebniak@gmail.com on 07/06/2017.
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class PointResponse extends Response{
+public class PointUpdateResponse extends Response{
     @JsonProperty("color")
     private Byte color;
     @JsonProperty("x")
@@ -15,8 +15,8 @@ public class PointResponse extends Response{
     @JsonProperty("y")
     private Integer y;
 
-    public PointResponse(Builder builder) {
-        super(Status.OK);
+    public PointUpdateResponse(Builder builder) {
+        super(Status.OK, Type.POINT_UPDATE);
         this.color = builder.getColor();
         this.x = builder.getX();
         this.y = builder.getY();
@@ -68,7 +68,7 @@ public class PointResponse extends Response{
 
         @Override
         public Response build() {
-            return new PointResponse(this);
+            return new PointUpdateResponse(this);
         }
     }
 

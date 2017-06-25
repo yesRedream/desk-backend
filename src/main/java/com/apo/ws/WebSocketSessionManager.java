@@ -38,11 +38,11 @@ public class WebSocketSessionManager {
         });
     }
 
-    public List<WebSocketSession> getSocketSessions() {
-        return socketSessions;
+    public int getSessionsCount() {
+        return socketSessions.size();
     }
 
-    public void setSocketSessions(List<WebSocketSession> socketSessions) {
-        this.socketSessions = socketSessions;
+    public List<WebSocketSession> getSocketSessions() {
+        return socketSessions;
     }
 }

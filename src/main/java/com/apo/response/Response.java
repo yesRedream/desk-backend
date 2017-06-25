@@ -10,9 +10,20 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public abstract class Response {
     @JsonProperty("status")
     protected Status status;
+    @JsonProperty("type")
+    protected Type type;
 
-    public Response(Status status) {
+    public Response(Status status, Type type) {
         this.status = status;
+        this.type = type;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 
     public Status getStatus() {

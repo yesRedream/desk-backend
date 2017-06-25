@@ -12,7 +12,7 @@ public class ErrorResponse extends Response{
     private String errorMessage;
 
     public ErrorResponse(Builder builder) {
-        super(Status.ERROR);
+        super(Status.ERROR, Type.ERROR);
         this.errorMessage = builder.getErrorMessage();
     }
 

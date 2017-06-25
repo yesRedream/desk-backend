@@ -3,9 +3,10 @@ package com.apo.controllers;
 import com.apo.error.RequestParamNotFoundException;
 import com.apo.model.desk.DeskHolder;
 import com.apo.model.desk.service.DeskService;
+import com.apo.response.PointInfoResponse;
 import com.apo.response.Response;
 import com.apo.error.ErrorMessages;
-import com.apo.response.PointResponse;
+import com.apo.response.PointUpdateResponse;
 import com.apo.ws.WebSocketSessionManager;
 import com.apo.model.desk.Desk;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ public class ApiController {
                          @RequestParam(value = "color", required = false) Byte color) {
         checkRequestParams(x, y, color);
         deskHolder.getDesk().setPoint(x, y, color);
-        Response response = new PointResponse.Builder()
+        Response response = new PointUpdateResponse.Builder()
                 .setColor(color)
                 .setX(x)
                 .setY(y)
@@ -54,7 +55,7 @@ public class ApiController {
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     public Response getPoint(@RequestParam("x") Integer x, @RequestParam("y") Integer y) {
         Byte color = deskHolder.getDesk().getPoint(x, y);
-        Response response = new PointResponse.Builder()
+        Response response = new PointInfoResponse.Builder()
                 .setColor(color)
                 .setX(x)
                 .setY(y)
