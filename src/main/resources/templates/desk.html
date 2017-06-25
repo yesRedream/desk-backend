@@ -5,6 +5,7 @@
     <title>Desk</title>
     <script type="text/javascript">
         //<![CDATA[
+        var HOST = "localhost:8080";
         var paletteNES = ["#7C7C7C","#0000FC","#0000BC","#4428BC","#940084","#A80020","#A81000","#881400",
                 "#503000","#007800","#006800","#005800","#004058","#000000","#000000","#000000","#BCBCBC",
                 "#0078F8","#0058F8","#6844FC","#D800CC","#E40058","#F83800","#E45C10","#AC7C00","#00B800",
@@ -20,6 +21,9 @@
         var selectedColorCanvas;
 
         var selectedColorIndex = 0;
+
+        var mouseOverDeskX = -1;
+        var mouseOverDeskY = -1;
 
 
         function init() {
@@ -53,8 +57,16 @@
                var _y = fieldCanvas.getBoundingClientRect().top;
                var x = Math.floor((event.clientX - _x) / 10);
                var y = Math.floor((event.clientY - _y) / 10);
+               drawSelectedStrokeOnDesk(x, y);
+            });
 
-                drawSelectedStrokeOnDesk(x, y);
+            fieldCanvas.addEventListener("click", function (event) {
+                var _x = fieldCanvas.getBoundingClientRect().left;
+                var _y = fieldCanvas.getBoundingClientRect().top;
+                var x = Math.floor((event.clientX - _x) / 10);
+                var y = Math.floor((event.clientY - _y) / 10);
+                var colorIndex = selectedColorIndex;
+                sendPixelColor(x, y, colorIndex);
             });
         }
 
@@ -93,15 +105,21 @@
         function drawSelectedStrokeOnDesk(x, y) {
             if (fieldCanvas.getContext) {
                 var ctx = fieldCanvas.getContext('2d');
-                ctx.strokeStyle = "#000000";
-                ctx.strokeRect(x * 10, y * 10, 9, 9);
-                ctx.strokeStyle = "#FFFFFF";
-                ctx.strokeRect(x * 10 + 1, y * 10 + 1, 7, 7);
+                if (mouseOverDeskX !== -1 && mouseOverDeskY !== -1) {
+                    var offset = mouseOverDeskX + 100 * mouseOverDeskY;
+                    drawPixelOnDesk(ctx, offset, getNESColorByIndex(field[offset]));
+                }
+                mouseOverDeskX = x;
+                mouseOverDeskY = y;
+                ctx.strokeStyle = "rgba(0,0,0,1)";
+                ctx.strokeRect(x * 10 + 1, y * 10 + 1, 8, 8);
+                ctx.strokeStyle = "rgba(255,255,255,1)";
+                ctx.strokeRect(x * 10 + 2, y * 10 + 2, 6, 6);
             }
         }
 
         function initWS() {
-            socket = new WebSocket("ws://localhost:8080/updates");
+            socket = new WebSocket("ws://" + HOST + "/updates");
             socket.onopen = function() {
                 console.log("Connection opened")
             };
@@ -114,6 +132,7 @@
                 var response = event.data;
                 response = JSON.parse(response);
                 if (response.status == "OK") {
+                    field[response.x + 100 * response.y] = response.color;
                     updatePixel(response.x, response.y, response.color);
                 }
             };
@@ -129,7 +148,7 @@
 
         function getDeskAndDrawDesk() {
             var xhr = new XMLHttpRequest();
-            var url = "http://localhost:8080/api/desk";
+            var url = "http://" + HOST + "/api/desk";
             xhr.open("GET",url,false);
             xhr.send();
             var responce = xhr.responseText;
@@ -153,7 +172,6 @@
         }
 
         function drawPixelOnDesk(ctx, offset, color) {
-            console.log("Offset:" + offset + " color: " + color);
 //            offset = x + y * 100;
             var y = Math.floor(offset / 100);
             var x = offset - 100 * y;
@@ -178,9 +196,9 @@
 
         }
 
-        function sendPixelColor() {
+        function sendPixelColor(x, y, color) {
             var xhr = new XMLHttpRequest();
-            var url = "http://localhost:8080/api/draw?x=0&y=0&color=" + selectedColorIndex;
+            var url = "http://" + HOST + "/api/draw?x=" + x + "&y=" + y + "&color=" + color;
             xhr.open("GET",url,false);
             xhr.send();
             var responce = xhr.responseText;
@@ -194,11 +212,13 @@
     <h1>Desk</h1>
     <a href="/">Home</a>
     <a href="/logout">Logout</a>
-    <canvas id="canvas_palette" width="1280" height="20"></canvas>
-    <button id="btn_draw" name="Draw selected pixel" onclick="sendPixelColor()">Draw</button>
-    <p>Selected color</p>
-
-    <canvas id="canvas_selected" width="20" height="20"></canvas>
-    <canvas id="canvas_field" width="1000" height="1000"></canvas>
+    <div>
+        <canvas id="canvas_palette" width="1280" height="20" style="image-rendering: pixelated"></canvas>
+        <div>
+            <p>Selected color</p>
+            <canvas id="canvas_selected" width="20" height="20" style="image-rendering: pixelated"></canvas>
+        </div>
+    </div>
+    <canvas id="canvas_field" width="1000" height="1000" style="image-rendering: pixelated"></canvas>
 </body>
 </html>
