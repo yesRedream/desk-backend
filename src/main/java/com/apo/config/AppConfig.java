@@ -8,14 +8,21 @@ import com.apo.model.user.dao.UserDAOMongo;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * Created by Andrii Pohrebniak andrii.pohrebniak@gmail.com on 05/06/2017.
  */
 @Configuration
 @EnableWebMvc
+@EnableAsync
 public class AppConfig extends WebMvcConfigurerAdapter{
 
     @Bean
@@ -32,5 +39,11 @@ public class AppConfig extends WebMvcConfigurerAdapter{
     @Scope(value = "singleton")
     public DeskHolder getDeskHolder() {
         return new DeskHolder();
+    }
+
+    @Bean
+    public Executor asyncExecutor() {
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+        return executor;
     }
 }

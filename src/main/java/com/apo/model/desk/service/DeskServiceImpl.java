@@ -3,6 +3,7 @@ package com.apo.model.desk.service;
 import com.apo.model.desk.Desk;
 import com.apo.model.desk.dao.DeskDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,6 +20,7 @@ public class DeskServiceImpl implements DeskService{
     }
 
     @Override
+    @Async
     public void updateDesk(Desk desk) {
         dao.updateDesk(desk);
     }
