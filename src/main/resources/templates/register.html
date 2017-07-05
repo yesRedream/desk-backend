@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+	<!--<link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet"/>-->
+	<!--<link rel="stylesheet" type="text/css" href="../static/font-awesome/css/font-awesome.min.css"/>-->
+	<!--<link rel="stylesheet" type="text/css" href="../static/style/main.css"/>-->
+    <title>Register</title>
+</head>
+<body>
+	<div class="bg-color">
+		<header>
+			<h6>NES Desk</h6>
+			<p>Username</p>
+			<a href="/logout">Logout</a>
+		</header>
+
+		<section class="content">
+			<h5>Registration</h5>
+
+			<form class="form" action="#" th:action="@{/register}" th:object="${userForm}" method="post">
+				<p>User is already  registered!</p>
+				<input type="text" th:field="*{username}" placeholder="Username"/>
+				<input type="text" th:field="*{email}" placeholder="Email"/>
+				<input type="password" th:field="*{password}" placeholder="Password"/>
+				<button type="Submit">Sign Up</button>
+			</form>
+
+		</section>
+
+		<footer>
+        	<a href="https://github.com/apohrebniak">GitHub <i class="fa fa-github-square"></i></a>
+    	</footer>
+	</div>
+</body>
+</html>

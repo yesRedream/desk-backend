@@ -2,6 +2,9 @@
 <html lang="en" xmlns:th="http://www.springframework.org/schema/mvc">
 <head>
     <meta charset="UTF-8"/>
+    <!--<link rel="stylesheet" type="text/css" href="style/main.css"/>-->
+    <!--<link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css"/>-->
+
     <title>Desk</title>
     <script type="text/javascript">
         //<![CDATA[
@@ -215,20 +218,30 @@
     </script>
 </head>
 <body onload="init();">
-    <h1>Desk</h1>
-    <a href="/">Home</a>
-    <a href="/logout">Logout</a>
-    <div>
-        <p>Online:</p>
-        <p id="online_count"></p>
-    </div>
-    <div>
-        <canvas id="canvas_palette" width="1280" height="20" style="image-rendering: pixelated"></canvas>
-        <div>
-            <p>Selected color</p>
+    <header>
+        <h6>NesDesk</h6>
+        <p>Username</p>
+        <a href="/logout">Logout</a>
+    </header>
+    <section class="status">
+        <p>Online: <span id="online_count">1</span></p>
+        <h2>Palette</h2>
+    </section>
+    
+    <section class="color-change">     
+       <canvas id="canvas_palette" width="1280" height="20" style="image-rendering: pixelated"></canvas>
+        <div class="selected">
+            <span>Selected color</span>
             <canvas id="canvas_selected" width="20" height="20" style="image-rendering: pixelated"></canvas>
         </div>
-    </div>
-    <canvas id="canvas_field" width="1000" height="1000" style="image-rendering: pixelated"></canvas>
+    </section>
+    
+    <section class="field">
+       <canvas id="canvas_field" width="1000" height="1000" style="image-rendering: pixelated"></canvas>
+    </section>
+
+    <footer>
+       <a href="https://github.com/apohrebniak">GitHub <i class="fa fa-github-square"></i></a>
+    </footer>
 </body>
 </html>

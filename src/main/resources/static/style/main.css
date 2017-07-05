@@ -1,0 +1,151 @@
+body {
+	margin: 0;	
+	padding: 0;	
+	background-color: #63276d;
+	color: #fff;
+	font-family: 'Raleway', sans-serif;
+	
+}
+
+.bg-color {
+  min-height: calc(100vh - 100px);
+}
+
+header {
+	background-color: #63276d;
+	color: #fff;
+	display: flex;
+	justify-content: flex-end;
+	padding: 10px;
+
+}
+
+header h6 {
+  margin: 0;
+  padding: 15px;
+  font-size: 16px;
+  
+  margin-right: auto;
+}
+
+header p {
+  margin: 0;
+  padding: 15px;
+  
+}
+
+header a {
+  margin: 0;
+  padding: 15px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.content{
+	text-align: center;
+	font-size: 48px;
+	padding-bottom: 120px;
+}
+
+.content p{
+	text-align: center;
+	font-size: 18px;
+}
+
+.content form {
+	display: flex;
+	flex-direction: column;	
+	justify-content: space-between;
+	align-items: center;
+}
+
+.content input {
+	min-height: 15px;
+	border-radius: 5px;
+	margin: 10px;
+	width: 250px;
+	padding: 10px;
+	font-size: 18px;
+	font-family: 'Raleway', sans-serif;
+	color: #63276d;
+}
+
+.content button {
+	border-radius: 5px;
+	margin: 10px;
+	padding: 10px 30px;
+	color: #63276d;
+	font-family: 'Raleway', sans-serif;
+	font-weight: bold;
+
+}
+
+.content a {
+    color: #fff;
+    text-decoration: none;
+	font-size: 14px;
+}
+
+.content a:hover {
+	color: #f0ff05;
+}
+
+.status {
+	padding: 0 25px;
+}
+
+.status p {
+	text-align: right;
+	margin: 0;
+}
+
+.status h2{
+	text-align: center;
+	font-size: 18px;
+	margin: 5px;
+}
+
+.field {
+	display: flex;
+	justify-content: center;
+}
+
+.color-change {
+	display: flex;
+
+	flex-direction: column;
+		justify-content: space-between;
+		-ms-align-items: center;
+		align-items: center;
+}
+
+.color-change span{
+	display: inline-block;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.color-change .selected {
+	padding: 10px;
+}
+
+.color-change .selected canvas {
+	position: relative;
+	top: 4px;
+}
+
+footer {
+	font-size: 18px;
+	padding: 30px;
+	text-align: right;
+}
+
+footer a {
+	text-decoration: none;
+	color: #fff;
+}
+
+footer a:hover {
+	color: #f0ff05;
+}

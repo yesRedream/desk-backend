@@ -1,14 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
+	<!--<link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet"/>-->
+	<!--<link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css"/>-->
+	<!--<link rel="stylesheet" type="text/css" href="style/main.css"/>-->
     <title>Home</title>
 </head>
 <body>
-    <h1>Home</h1>
-    <h3>Pixel desk with NES colors</h3>
-    <a href="/login">Login</a>
-    <a href="/desk">Desk</a>
-    <a href="/about">About</a>
+	<div class="bg-color">
+		<header>
+			<h6>NES Desk</h6>
+			<p>Username</p>
+			<a href="/logout">Logout</a>
+		</header>
+
+		<section class="content">
+			<h3>Pixel desk with NES colors</h3>
+			<form th:action="@{/home}" method="post">
+				<p>Wrong email or password!</p>
+				<input type="text" placeholder="Username"/>
+				<input type="password" placeholder="Password"/>
+				<button type="submit">Sign In</button>
+				<a href="/register">Sign Up</a>
+			</form>
+		</section>
+
+	</div>
+
+	<footer>
+        <a href="https://github.com/apohrebniak">GitHub <i class="fa fa-github-square"></i></a>
+    </footer>
 </body>
 </html>
