@@ -18,10 +18,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/register").permitAll()
-                .antMatchers("/**").authenticated()
+                .antMatchers("/desk").authenticated()
                 .and()
-                .formLogin().permitAll()
+                .formLogin().defaultSuccessUrl("/desk", false).loginPage("/").permitAll()
                 .and()
                 .logout().clearAuthentication(true).logoutSuccessUrl("/").permitAll()
                 .and()

@@ -10,12 +10,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * Created by Andrii Pohrebniak andrii.pohrebniak@gmail.com on 05/06/2017.
@@ -24,6 +24,11 @@ import java.util.concurrent.ThreadPoolExecutor;
 @EnableWebMvc
 @EnableAsync
 public class AppConfig extends WebMvcConfigurerAdapter{
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/res/**").addResourceLocations("classpath:/res/");
+    }
 
     @Bean
     public UserDAO getUserDAO() {
