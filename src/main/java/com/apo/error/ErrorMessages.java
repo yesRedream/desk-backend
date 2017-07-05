@@ -7,4 +7,5 @@ public interface ErrorMessages {
     String X_NOT_FOUND = "\'x\' is mandatory parameter";
     String Y_NOT_FOUND = "\'y\' is mandatory parameter";
     String COLOR_NOT_FOUND = "\'color\' is mandatory parameter";
+    String USER_EXISTS = "User exists";
 }

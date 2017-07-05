@@ -1,12 +1,10 @@
 package com.apo.controllers;
 
+import com.apo.error.UserExistsException;
 import com.apo.model.user.User;
-import com.apo.security.CustomAuthenticationProvider;
+import com.apo.model.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +23,8 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("register")
 public class SignUpController {
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping
     public String getView(Model model) {
@@ -36,13 +36,31 @@ public class SignUpController {
     public String handleUserForm(@Valid @ModelAttribute("userForm") UserForm userForm,
                                  BindingResult bindingResult, HttpServletRequest request) {
         if (!bindingResult.hasErrors()) {
-            User user = buildNewUser(userForm);
-            autoAuthenticateUser(user, request);
-            //TODO: persist
-            return "redirect:/desk";//TODO: user messages
+            boolean success = saveAndAuthorizeUser(userForm, request);
+            if (success) {
+                return "redirect:/desk";
+            } else {
+                return "redirect:/register"; //TODO: user messages
+            }
         } else {
             return "redirect:/register";
         }
+    }
+
+    private boolean saveAndAuthorizeUser(UserForm userForm, HttpServletRequest request) {
+        User user = buildNewUser(userForm);
+        autoAuthenticateUser(user, request);
+
+        return saveUser(user);
+    }
+
+    private boolean saveUser(User user) {
+        try {
+            userRepository.add(user);
+        } catch (UserExistsException e) {
+            return false;
+        }
+        return true;
     }
 
     private User buildNewUser(UserForm userForm) {

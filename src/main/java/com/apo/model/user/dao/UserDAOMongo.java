@@ -1,9 +1,11 @@
 package com.apo.model.user.dao;
 
+import com.apo.error.UserExistsException;
 import com.apo.model.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.CriteriaDefinition;
 import org.springframework.data.mongodb.core.query.Query;
 
 import java.util.List;
@@ -17,8 +19,13 @@ public class UserDAOMongo implements UserDAO{
     private MongoOperations operations;
 
     @Override
-    public void save(User user) {
-        operations.save(user);
+    public void save(User user) throws UserExistsException{
+        if (operations.exists(Query.query(buildUserExistsCriteria(user)), User.class)) {
+            //user is already exist
+            throw new UserExistsException();
+        } else {
+            operations.save(user);
+        }
     }
 
     @Override
@@ -50,5 +57,14 @@ public class UserDAOMongo implements UserDAO{
     @Override
     public List<User> getAll() {
         return operations.findAll(User.class);
+    }
+
+    private CriteriaDefinition buildUserExistsCriteria(User user) {
+        Criteria criteria = new Criteria();
+        criteria.orOperator(
+                Criteria.where("username").is(user.getUsername()),
+                Criteria.where("email").is(user.getEmail())
+        );
+        return criteria;
     }
 }
