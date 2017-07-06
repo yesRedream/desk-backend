@@ -7,7 +7,7 @@ import org.springframework.security.web.context.AbstractSecurityWebApplicationIn
 /**
  * Created by Andrii Pohrebniak andrii.pohrebniak@gmail.com on 22/06/2017.
  */
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
 @EnableGlobalMethodSecurity
 public class SecurityInit extends AbstractSecurityWebApplicationInitializer {
 }

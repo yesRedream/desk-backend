@@ -19,13 +19,8 @@ public class UserDAOMongo implements UserDAO{
     private MongoOperations operations;
 
     @Override
-    public void save(User user) throws UserExistsException{
-        if (operations.exists(Query.query(buildUserExistsCriteria(user)), User.class)) {
-            //user is already exist
-            throw new UserExistsException();
-        } else {
-            operations.save(user);
-        }
+    public void save(User user) {
+        operations.save(user);
     }
 
     @Override
@@ -66,5 +61,11 @@ public class UserDAOMongo implements UserDAO{
                 Criteria.where("email").is(user.getEmail())
         );
         return criteria;
+    }
+
+    @Override
+    public boolean exists(User user) {
+        return operations.
+                exists(Query.query(buildUserExistsCriteria(user)), User.class);
     }
 }

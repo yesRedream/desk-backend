@@ -33,7 +33,7 @@ public class ApiController {
         return deskHolder.getDesk();
     }
 
-    @GetMapping("/draw") //TODO: change to POST
+    @PutMapping("/draw")
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     public Response draw(@RequestParam(value = "x", required = false) Integer x,
                          @RequestParam(value = "y", required = false) Integer y,

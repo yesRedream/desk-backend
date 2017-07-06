@@ -1,5 +1,6 @@
 package com.apo.model.user.repository;
 
+import com.apo.error.UserExistsException;
 import com.apo.model.user.User;
 import com.apo.model.user.dao.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,12 @@ public class UserRepositoryImpl implements UserRepository{
     private UserDAO dao;
 
     @Override
-    public void add(User user) {
-        dao.save(user);
+    public void add(User user) throws UserExistsException {
+        if (exists(user)) {
+            throw new UserExistsException();
+        } else {
+            dao.save(user);
+        }
     }
 
     @Override
@@ -49,5 +54,10 @@ public class UserRepositoryImpl implements UserRepository{
     @Override
     public List<User> getAll() {
         return dao.getAll();
+    }
+
+    @Override
+    public boolean exists(User user) {
+        return dao.exists(user);
     }
 }

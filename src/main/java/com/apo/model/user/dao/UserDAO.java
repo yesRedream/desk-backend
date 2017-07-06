@@ -14,4 +14,5 @@ public interface UserDAO {
     User getByEmail(String email);
     void remove(User user);
     List<User> getAll();
+    boolean exists(User user);
 }

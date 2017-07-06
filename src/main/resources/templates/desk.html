@@ -208,7 +208,7 @@
         function sendPixelColor(x, y, color) {
             var xhr = new XMLHttpRequest();
             var url = "http://" + HOST + "/api/draw?x=" + x + "&y=" + y + "&color=" + color;
-            xhr.open("GET",url,false);
+            xhr.open("PUT",url,false);
             xhr.send();
             var responce = xhr.responseText;
             responce = JSON.parse(responce);

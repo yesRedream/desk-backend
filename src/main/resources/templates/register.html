@@ -25,6 +25,7 @@
 				<input type="text" th:field="*{email}" placeholder="Email"/>
 				<p th:if="${#fields.hasErrors('email')}">Email is invalid!</p>
 				<input type="password" th:field="*{password}" placeholder="Password"/>
+				<p th:if="${#fields.hasErrors('password')}">Invalid password!</p>
 				<button type="Submit">Sign Up</button>
 			</form>
 

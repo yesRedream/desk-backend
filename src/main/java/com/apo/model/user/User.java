@@ -13,7 +13,7 @@ import java.util.List;
  * Created by Andrii Pohrebniak andrii.pohrebniak@gmail.com on 23/06/2017.
  */
 @Document(collection = User.COLLECTION)
-public class User implements UserDetails{ //TODO: add new information
+public class User implements UserDetails{
     static final String COLLECTION = "users";
 
     @Id
