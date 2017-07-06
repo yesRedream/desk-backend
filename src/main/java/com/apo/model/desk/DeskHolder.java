@@ -1,5 +1,6 @@
 package com.apo.model.desk;
 
+import com.apo.config.MongoProperty;
 import com.apo.model.desk.service.DeskService;
 import com.apo.util.PropertyManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class DeskHolder {
         if (desk == null) {
             desk = service.getDesk();
             if (desk == null) {
-                desk = new Desk(propertyManager.getProperty("db.mongo.desk.id"));
+                desk = Desk.createInstanceWithId(propertyManager.getProperty(MongoProperty.DESK_ID));
                 service.updateDesk(desk);
             }
         }
