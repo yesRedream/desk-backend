@@ -19,9 +19,11 @@
 			<h5>Registration</h5>
 
 			<form class="form" action="#" th:action="@{/register}" th:object="${userForm}" method="post">
-				<p>User is already  registered!</p>
+				<p th:if="${errorUserExists!=null}">User with this name or email is already  registered!</p>
 				<input type="text" th:field="*{username}" placeholder="Username"/>
+				<p th:if="${#fields.hasErrors('username')}">Username is invalid!</p>
 				<input type="text" th:field="*{email}" placeholder="Email"/>
+				<p th:if="${#fields.hasErrors('email')}">Email is invalid!</p>
 				<input type="password" th:field="*{password}" placeholder="Password"/>
 				<button type="Submit">Sign Up</button>
 			</form>

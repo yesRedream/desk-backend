@@ -47,10 +47,9 @@ public class SignUpController {
         if (!bindingResult.hasErrors()) {
             boolean success = saveAndAuthorizeUser(userForm, request);
             if (success) {
-//                return "redirect:/desk";
-                return new ModelAndView("desk");
+                return new ModelAndView("redirect:/desk");
             } else {
-//                return "redirect:/register"; //TODO: user messages
+                modelAndView.addObject("errorUserExists", new Object());
                 return modelAndView;
             }
         } else {
