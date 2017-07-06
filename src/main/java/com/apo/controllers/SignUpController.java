@@ -5,6 +5,7 @@ import com.apo.model.user.User;
 import com.apo.model.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -30,7 +31,11 @@ public class SignUpController {
     private PasswordEncoder encoder;
 
     @GetMapping
-    public String getView(Model model) {
+    public String getView(Model model, Authentication auth) {
+        if (auth != null) {
+            User user = (User)auth.getDetails();
+            model.addAttribute("user", user);
+        }
         model.addAttribute("userForm", new UserForm());
         return "register";
     }

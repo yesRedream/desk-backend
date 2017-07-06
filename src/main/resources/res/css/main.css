@@ -24,8 +24,17 @@ header h6 {
   margin: 0;
   padding: 15px;
   font-size: 16px;
-  
   margin-right: auto;
+}
+
+#logo {
+	margin: 0;
+	padding: 15px;
+	font-size: 16px;
+	color: #fff;
+	text-decoration: none;
+	font-weight: bold;
+	margin-right: auto;
 }
 
 header p {

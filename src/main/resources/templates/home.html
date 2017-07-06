@@ -10,19 +10,22 @@
 <body>
 	<div class="bg-color">
 		<header>
-			<h6>NES Desk</h6>
-			<p>Username</p>
-			<a href="/logout">Logout</a>
+			<a th:href="@{/}" id="logo">NES Desk</a>
+			<p th:if="${user!=null}" th:text="${user.username}">Username</p>
+			<a th:if="${user!=null}" href="/logout">Logout</a>
 		</header>
 
 		<section class="content">
 			<h3>Pixel desk with NES colors</h3>
-			<form th:action="@{/}" method="post">
+
+			<button th:if="${user!=null}" type="submit" onclick="window.location.href='../desk'">Try It!</button>
+
+			<form th:unless="${user!=null}" th:action="@{/}" method="post">
 				<p>Wrong email or password!</p>
 				<input type="text" placeholder="Username" name="username"/>
 				<input type="password" placeholder="Password" name="password"/>
 				<button type="submit" name="submit">Sign In</button>
-				<a href="/register">Sign Up</a>
+				<a th:href="@{/register}">Sign Up</a>
 			</form>
 		</section>
 

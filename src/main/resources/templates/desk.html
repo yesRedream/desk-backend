@@ -219,10 +219,11 @@
 </head>
 <body onload="init();">
     <header>
-        <h6>NesDesk</h6>
-        <p>Username</p>
-        <a href="/logout">Logout</a>
+        <a th:href="@{/}" id="logo">NES Desk</a>
+        <p th:if="${user!=null}" th:text="${user.username}">Username</p>
+        <a th:if="${user!=null}" href="/logout">Logout</a>
     </header>
+
     <section class="status">
         <p>Online: <span id="online_count">1</span></p>
         <h2>Palette</h2>
