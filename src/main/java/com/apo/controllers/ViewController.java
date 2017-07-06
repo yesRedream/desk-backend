@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * Created by Andrii Pohrebniak andrii.pohrebniak@gmail.com on 14/06/2017.
@@ -19,10 +20,14 @@ public class ViewController {
     @Autowired UserRepository repository;
 
     @GetMapping("/")
-    public String home(Model model, Authentication auth){
+    public String home(Model model, Authentication auth,
+                       @RequestParam(value = "error", required = false) Boolean error){
         if (auth != null) {
             User user = (User)auth.getDetails();
             model.addAttribute("user", user);
+        }
+        if (error != null) {
+            model.addAttribute("error", Boolean.TRUE);
         }
         return "home";
     }

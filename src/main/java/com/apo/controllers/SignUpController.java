@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -41,17 +42,19 @@ public class SignUpController {
     }
 
     @PostMapping
-    public String handleUserForm(@Valid @ModelAttribute("userForm") UserForm userForm,
-                                 BindingResult bindingResult, HttpServletRequest request) {
+    public ModelAndView handleUserForm(@Valid @ModelAttribute("userForm") UserForm userForm,
+                                       BindingResult bindingResult, HttpServletRequest request, ModelAndView modelAndView) {
         if (!bindingResult.hasErrors()) {
             boolean success = saveAndAuthorizeUser(userForm, request);
             if (success) {
-                return "redirect:/desk";
+//                return "redirect:/desk";
+                return new ModelAndView("desk");
             } else {
-                return "redirect:/register"; //TODO: user messages
+//                return "redirect:/register"; //TODO: user messages
+                return modelAndView;
             }
         } else {
-            return "redirect:/register";
+            return modelAndView;
         }
     }
 
