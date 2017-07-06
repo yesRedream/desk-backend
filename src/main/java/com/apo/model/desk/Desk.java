@@ -21,6 +21,13 @@ public class Desk {
     @Id
     private String id;
 
+    public Desk() {
+    }
+
+    public Desk(String id) {
+        this.id = id;
+    }
+
     public static final int DESK_SIZE = 100;
 
     /**

@@ -5,6 +5,7 @@ import com.apo.model.desk.dao.DeskDAOMongo;
 import com.apo.model.desk.DeskHolder;
 import com.apo.model.user.dao.UserDAO;
 import com.apo.model.user.dao.UserDAOMongo;
+import com.apo.util.PropertyManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
@@ -50,5 +51,10 @@ public class AppConfig extends WebMvcConfigurerAdapter{
     public Executor asyncExecutor() {
         ExecutorService executor = Executors.newFixedThreadPool(2);
         return executor;
+    }
+
+    @Bean
+    public PropertyManager propertyManager() {
+        return new PropertyManager("/application.properties");
     }
 }
