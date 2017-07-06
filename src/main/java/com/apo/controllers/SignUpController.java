@@ -6,6 +6,7 @@ import com.apo.model.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,6 +26,8 @@ import javax.validation.Valid;
 public class SignUpController {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder encoder;
 
     @GetMapping
     public String getView(Model model) {
@@ -67,7 +70,7 @@ public class SignUpController {
         return new User.Builder()
                 .setUsername(userForm.getUsername())
                 .setEmail(userForm.getEmail())
-                .setPassword(userForm.getPassword())//TODO: encrypt pass
+                .setPassword(encoder.encode(userForm.getPassword()))
                 .addRole("ROLE_USER")
                 .build();
     }
@@ -79,7 +82,7 @@ public class SignUpController {
         request.getSession();
 
         UsernamePasswordAuthenticationToken token =
-                new UsernamePasswordAuthenticationToken(username, password, null);
+                new UsernamePasswordAuthenticationToken(username, password, user.getAuthorities());
         token.setDetails(user);
 
         SecurityContextHolder.getContext().setAuthentication(token);

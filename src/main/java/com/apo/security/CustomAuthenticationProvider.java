@@ -8,6 +8,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * Created by Andrii Pohrebniak andrii.pohrebniak@gmail.com on 22/06/2017.
@@ -16,6 +17,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
     private UserRepository repository;
+    @Autowired
+    private PasswordEncoder encoder;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -26,7 +29,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         if (user == null || !user.getUsername().equalsIgnoreCase(name)) {
             throw new BadCredentialsException("Username not found");
         }
-        if (!user.getPassword().equals(password)) {
+        if (!encoder.matches(password, user.getPassword())) {
             throw new BadCredentialsException("Passwords don't match");
         }
 
