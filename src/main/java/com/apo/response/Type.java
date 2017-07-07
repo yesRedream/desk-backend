@@ -8,5 +8,5 @@ public enum Type {
     POINT_INFO,
     DESK,
     POINT_UPDATE,
-    ONLINE_UPDATE;
+    ONLINE_UPDATE
 }
