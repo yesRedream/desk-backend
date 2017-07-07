@@ -2,15 +2,17 @@
 <html lang="en" xmlns:th="http://www.springframework.org/schema/mvc">
 <head>
     <meta charset="UTF-8"/>
-    <meta name="theme-color" content="#63276d">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#63276d"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="../res/css/main.css" th:href="@{/res/font-awesome/css/font-awesome.min.css}"/>
     <link rel="stylesheet" type="text/css" href="../res/css/main.css" th:href="@{/res/css/main.css}"/>
     <title>Desk</title>
     <script type="text/javascript">
         //<![CDATA[
+        var HTTP = "http://";
+        var WS = "ws://";
         var HOST = "localhost:8080";
         var paletteNES = ["#7C7C7C","#0000FC","#0000BC","#4428BC","#940084","#A80020","#A81000","#881400",
                 "#503000","#007800","#006800","#005800","#004058","#000000","#000000","#000000","#BCBCBC",
@@ -125,7 +127,7 @@
         }
 
         function initWS() {
-            socket = new WebSocket("ws://" + HOST + "/updates");
+            socket = new WebSocket(WS + HOST + "/updates");
             socket.onopen = function() {
                 console.log("Connection opened")
             };
@@ -160,7 +162,7 @@
 
         function getDeskAndDrawDesk() {
             var xhr = new XMLHttpRequest();
-            var url = "http://" + HOST + "/api/desk";
+            var url = HTTP + HOST + "/api/desk";
             xhr.open("GET",url,false);
             xhr.send();
             var responce = xhr.responseText;
@@ -210,7 +212,7 @@
 
         function sendPixelColor(x, y, color) {
             var xhr = new XMLHttpRequest();
-            var url = "http://" + HOST + "/api/draw?x=" + x + "&y=" + y + "&color=" + color;
+            var url = HTTP + HOST + "/api/draw?x=" + x + "&y=" + y + "&color=" + color;
             xhr.open("PUT",url,false);
             xhr.send();
             var responce = xhr.responseText;
