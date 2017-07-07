@@ -24,7 +24,7 @@
 			<button th:if="${user!=null}" type="submit" onclick="window.location.href='../desk'">Try It!</button>
 
 			<form th:unless="${user!=null}" th:action="@{/}" method="post">
-				<p th:if="${error!=null}">Wrong email or password!</p>
+				<p th:if="${error!=null}">Wrong username or password!</p>
 				<input type="text" placeholder="Username" name="username"/>
 				<input type="password" placeholder="Password" name="password"/>
 				<button type="submit" name="submit">Sign In</button>
