@@ -2,8 +2,8 @@ package com.apo.model.desk;
 
 
 import com.apo.error.InvalidColorValueException;
-import com.apo.util.ByteArraySerializer;
 import com.apo.error.InvalidCoordinatesException;
+import com.apo.util.ByteArraySerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

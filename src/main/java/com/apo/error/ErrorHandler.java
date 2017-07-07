@@ -1,6 +1,7 @@
 package com.apo.error;
 
-import com.apo.response.*;
+import com.apo.response.ErrorResponse;
+import com.apo.response.Response;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 

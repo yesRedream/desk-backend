@@ -1,6 +1,5 @@
-package com.apo.config;
+package com.apo.mongo;
 
-import com.apo.mongo.MongoProperty;
 import com.apo.util.PropertyManager;
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;

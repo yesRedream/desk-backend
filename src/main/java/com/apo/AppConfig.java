@@ -1,8 +1,8 @@
-package com.apo.config;
+package com.apo;
 
+import com.apo.model.desk.DeskHolder;
 import com.apo.model.desk.dao.DeskDAO;
 import com.apo.model.desk.dao.DeskDAOMongo;
-import com.apo.model.desk.DeskHolder;
 import com.apo.model.user.dao.UserDAO;
 import com.apo.model.user.dao.UserDAOMongo;
 import com.apo.util.PropertyManager;

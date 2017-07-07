@@ -1,7 +1,7 @@
 package com.apo.model.desk;
 
-import com.apo.mongo.MongoProperty;
 import com.apo.model.desk.service.DeskService;
+import com.apo.mongo.MongoProperty;
 import com.apo.util.PropertyManager;
 import org.springframework.beans.factory.annotation.Autowired;
 

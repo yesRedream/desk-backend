@@ -1,4 +1,4 @@
-package com.apo.config;
+package com.apo.security;
 
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;

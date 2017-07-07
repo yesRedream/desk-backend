@@ -1,6 +1,5 @@
 package com.apo.model.user.dao;
 
-import com.apo.error.UserExistsException;
 import com.apo.model.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
