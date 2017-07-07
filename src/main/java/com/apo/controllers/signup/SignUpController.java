@@ -1,4 +1,4 @@
-package com.apo.controllers;
+package com.apo.controllers.signup;
 
 import com.apo.error.UserExistsException;
 import com.apo.model.user.User;

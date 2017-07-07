@@ -1,4 +1,4 @@
-package com.apo.config;
+package com.apo.ws;
 
 import com.apo.ws.WebSocketSessionManager;
 import com.apo.ws.WebSocketUpdatesHandler;

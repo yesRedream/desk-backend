@@ -1,4 +1,4 @@
-package com.apo.config;
+package com.apo.mongo;
 
 /**
  * Created by Andrii Pohrebniak andrii.pohrebniak@gmail.com on 06/07/2017.

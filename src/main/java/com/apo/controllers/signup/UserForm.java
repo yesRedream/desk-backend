@@ -1,4 +1,4 @@
-package com.apo.controllers;
+package com.apo.controllers.signup;
 
 import org.hibernate.validator.constraints.Email;
 
