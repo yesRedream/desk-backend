@@ -8,7 +8,7 @@ body {
 }
 
 .bg-color {
-  min-height: calc(100vh - 100px);
+	min-height: calc(100vh - 50px);
 }
 
 header {
@@ -21,13 +21,13 @@ header {
 }
 
 header h6 {
-  margin: 0;
-  padding: 15px;
-  font-size: 16px;
-  margin-right: auto;
+	margin: 0;
+	padding: 15px;
+	font-size: 16px;
+	margin-right: auto;
 }
 
-#logo {
+header #logo {
 	margin: 0;
 	padding: 15px;
 	font-size: 16px;
@@ -38,28 +38,38 @@ header h6 {
 }
 
 header p {
-  margin: 0;
-  padding: 15px;
-  
+	margin: 0;
+	padding: 15px;  
 }
 
 header a {
-  margin: 0;
-  padding: 15px;
-  color: #fff;
-  text-decoration: none;
-  font-weight: bold;
+	margin: 0;
+	padding: 15px;
+	color: #fff;
+	text-decoration: none;
+	font-weight: bold;
+	transition: 100ms;
+  	transition-timing-function: ease-in-out;
+}
+
+header a:hover {
+	color: #f0ff05;
 }
 
 .content{
 	text-align: center;
+}
+
+.content h3 {
 	font-size: 48px;
-	padding-bottom: 120px;
 }
 
 .content p{
-	text-align: center;
 	font-size: 14px;
+}
+
+.content h5 {
+	margin: 15px;
 }
 
 .content form {
@@ -81,19 +91,38 @@ header a {
 }
 
 .content button {
+	background-color: #fff;
 	border-radius: 5px;
 	margin: 10px;
 	padding: 10px 30px;
 	color: #63276d;
 	font-family: 'Raleway', sans-serif;
 	font-weight: bold;
-
+	transition: 100ms;
+  	transition-timing-function: ease-in-out;
 }
+
+.content button:hover {
+	background-color: #d2d2d2;
+}
+
+.content .remember-wrap {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.content input[type="checkbox"] {
+	width: 15px;
+	height: 15px;
+}
+
 
 .content a {
     color: #fff;
     text-decoration: none;
 	font-size: 14px;
+	cursor: pointer;
 }
 
 .content a:hover {
@@ -124,9 +153,8 @@ header a {
 	display: flex;
 
 	flex-direction: column;
-		justify-content: space-between;
-		-ms-align-items: center;
-		align-items: center;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .color-change span{
@@ -146,15 +174,36 @@ header a {
 
 footer {
 	font-size: 18px;
-	padding: 30px;
+	padding: 15px;
+	line-height: 20px;
 	text-align: right;
 }
 
 footer a {
 	text-decoration: none;
 	color: #fff;
+	transition: 100ms;
+  	transition-timing-function: ease-in-out;
 }
 
 footer a:hover {
 	color: #f0ff05;
+}
+
+footer a #github-logo {
+	fill: #fff;
+	transition: 100ms;
+  	transition-timing-function: ease-in-out;
+}
+
+footer a:hover #github-logo {
+	fill: #f0ff05;
+}
+
+
+@media only screen and (max-width : 480px) {
+	.content h3{
+	font-size: 32px;
+	}
+	
 }
